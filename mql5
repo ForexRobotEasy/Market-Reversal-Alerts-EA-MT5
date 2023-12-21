@@ -1,0 +1,128 @@
+mql5
+//+------------------------------------------------------------------+
+//| Expert advisor program for Market Reversal Alerts EA MT5          |
+//| Developer's Site: forexroboteasy.com                              |
+//| Development: Forex Robot Easy Team                                |
+//|                                                                  |
+//| This EA trades based on market structure reversals and uses      |
+//| customizable settings to implement multiple trading strategies.  |
+//| The EA executes trades whenever a market reversal alert is        |
+//| received and draws support rectangles as the price moves.        |
+//|                                                                  |
+//| Technical Specification:                                          |
+//| - Trade execution based on market reversal alerts                 |
+//| - Drawing support rectangles                                     |
+//| - Customizable settings for multiple trading strategies          |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//| Include necessary libraries and define global variables           |
+//+------------------------------------------------------------------+
+#include <Trade\Trade.mqh>
+
+// Global variables
+string symbol = Symbol();
+int timeframe = PERIOD_CURRENT;
+int magicNumber = 123456;
+
+//+------------------------------------------------------------------+
+//| Expert advisor initialization function                            |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set desired settings and options here
+
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert advisor start function                                     |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Check for market reversal alerts from indicator
+    if (MarketReversalAlert())
+    {
+        // Execute trades based on specified conditions and filters
+        if (ShouldExecuteTrade())
+        {
+            // Calculate trade parameters
+            double lotSize = CalculateLotSize();
+            double stopLoss = CalculateStopLoss();
+            double takeProfit = CalculateTakeProfit();
+
+            // Place trade
+            int ticket = OrderSend(symbol, OP_BUY, lotSize, Ask, 0, stopLoss, takeProfit, '', magicNumber, 0, Green);
+            if (ticket > 0)
+            {
+                // Trade executed successfully
+                Print('Buy trade placed at ', Ask);
+            }
+            else
+            {
+                // Trade execution failed
+                Print('Error placing buy trade: ', GetLastError());
+            }
+        }
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Check for market reversal alerts from indicator                   |
+//+------------------------------------------------------------------+
+bool MarketReversalAlert()
+{
+    // Add code to check for market reversal alerts from indicator
+
+    return(true); // Placeholder value, replace with actual logic
+}
+
+//+------------------------------------------------------------------+
+//| Execute trades based on specified conditions and filters          |
+//+------------------------------------------------------------------+
+bool ShouldExecuteTrade()
+{
+    // Add code to check if trade should be executed based on conditions and filters
+
+    return(true); // Placeholder value, replace with actual logic
+}
+
+//+------------------------------------------------------------------+
+//| Calculate lot size based on trading strategy                       |
+//+------------------------------------------------------------------+
+double CalculateLotSize()
+{
+    // Add code to calculate lot size based on trading strategy
+
+    return(0.01); // Placeholder value, replace with actual logic
+}
+
+//+------------------------------------------------------------------+
+//| Calculate stop loss based on trading strategy                     |
+//+------------------------------------------------------------------+
+double CalculateStopLoss()
+{
+    // Add code to calculate stop loss based on trading strategy
+
+    return(50); // Placeholder value, replace with actual logic
+}
+
+//+------------------------------------------------------------------+
+//| Calculate take profit based on trading strategy                   |
+//+------------------------------------------------------------------+
+double CalculateTakeProfit()
+{
+    // Add code to calculate take profit based on trading strategy
+
+    return(100); // Placeholder value, replace with actual logic
+}
+
+//+------------------------------------------------------------------+
+//| Expert advisor deinitialization function                          |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Perform any necessary cleanup here
+}
+
+//+------------------------------------------------------------------+
